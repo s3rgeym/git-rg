@@ -1,4 +1,7 @@
-# `README.md`
+# README
+
+[![PyPI version](https://img.shields.io/pypi/v/git-rg)](https://pypi.org/project/git-rg/)
+[![Downloads](https://img.shields.io/pypi/dm/git-rg)](https://pypi.org/project/git-rg/)
 
 `git-rg` is a command-line tool for recursively searching for files in Git repositories that contain specific text patterns using regular expressions. It's useful for finding sensitive information like accidentally committed passwords or API keys within `.git` directories.
 
