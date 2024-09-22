@@ -4,16 +4,14 @@
 
 ## Installation
 
-To install directly from the repository with `pipx`:
+```bash
+pipx install git-rg
+```
+
+To install latest version from Github:
 
 ```bash
 pipx install git+https://github.com/s3rgeym/git-rg
-```
-
-Using `pip`:
-
-```bash
-pip install git-rg
 ```
 
 ## Usage
