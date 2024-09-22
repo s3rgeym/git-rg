@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "git-rg"
-description = "A utility for recursively searching for files in .git directories using regex."
+description = "Git Recursive Grep"
 authors = [{ name = "s3rgeym" }]
 readme = "README.md"
 license = { text = "MIT" }
