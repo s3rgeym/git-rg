@@ -10,7 +10,7 @@ from functools import partial
 from pathlib import Path
 from signal import SIG_DFL, SIGPIPE, signal
 
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 __author__ = "s3rgeym"
 
 # https://stackoverflow.com/questions/14207708/ioerror-errno-32-broken-pipe-when-piping-prog-py-othercmd
@@ -58,10 +58,10 @@ def is_compressed(f: typing.BinaryIO) -> bool:
         # https://stackoverflow.com/a/17176881/2240578
         return f.read(2) in [b"\x1f\x8b", b"\x78\x9c", b"\x78\x01", b"\x78\xda"]
     finally:
-        f.seek(0)
+        f.seek(f.tell() - 2)
 
 
-def readlines(file_path: Path) -> typing.Iterable[str]:
+def git_readlines(file_path: Path) -> typing.Iterable[str]:
     try:
         with file_path.open("rb") as f:
             if is_compressed(f):
@@ -106,7 +106,7 @@ def print_line(linenum: int, line: str) -> None:
     print(f"{BLUE}{linenum:4d}{RESET} {line}")
 
 
-def grep(
+def git_grep(
     pattern: re.Pattern,
     file_path: Path,
     before: int,
@@ -115,7 +115,7 @@ def grep(
 ) -> None:
     try:
         before_lines = deque(maxlen=before)
-        line_it = enumerate(readlines(file_path), 1)
+        line_it = enumerate(git_readlines(file_path), 1)
 
         for linenum, line in line_it:
             matches = list(pattern.finditer(line))
@@ -150,7 +150,7 @@ def grep(
         print_err(f"Error reading {file_path}: {e}")
 
 
-def recursive_grep(
+def recursive_git_grep(
     pattern: re.Pattern,
     directory: Path,
     before: int,
@@ -159,9 +159,9 @@ def recursive_grep(
 ) -> None:
     for file in directory.glob("**/*.git/**/*"):
         if file.is_file():
-            if file.name in ["index", "config", "HEAD"]:
-                continue
-            grep(pattern, file, before, after, maxline)
+            # if file.name in ["index", "config", "HEAD", "packed-refs"]:
+            #     continue
+            git_grep(pattern, file, before, after, maxline)
 
 
 def main(argv: typing.Sequence[str] | None = None) -> None:
@@ -195,11 +195,24 @@ def main(argv: typing.Sequence[str] | None = None) -> None:
         default=0,
         help="Number of lines to show after the match",
     )
+    parser.add_argument(
+        "-L",
+        "--maxline",
+        type=int,
+        default=256,
+        help="Maximum length of the output line",
+    )
 
     args = parser.parse_args(argv)
 
     with suppress(KeyboardInterrupt):
-        recursive_grep(re.compile(args.pattern), args.path, args.before, args.after)
+        recursive_git_grep(
+            re.compile(args.pattern),
+            args.path,
+            args.before,
+            args.after,
+            args.maxline,
+        )
 
 
 if __name__ == "__main__":

@@ -22,15 +22,8 @@ pipx install git+https://github.com/s3rgeym/git-rg
 ## Usage
 
 ```bash
-git-rg <pattern> [path] [-B <num>] [-A <num>]
+git-rg <pattern> [path] [-B <num>] [-A <num>] [-L <maxline>]
 ```
-
-### Arguments
-
-- `pattern`: Regular expression to search for.
-- `path`: Path to the directory where the search should begin (default: current directory).
-- `-B`, `--before`: Number of lines to show before the match.
-- `-A`, `--after`: Number of lines to show after the match.
 
 ### Example
 
