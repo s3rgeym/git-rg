@@ -37,3 +37,5 @@ To search for passwords in all `.git` files within the current directory and sho
 ```bash
 git-rg "(?i)password\s*=\s*['\"]?(\w+)['\"]?" ~/projects -B 2 -A 2
 ```
+
+![image](https://github.com/user-attachments/assets/9b3b9c18-50e5-4430-98a3-5a5601f14aa6)
