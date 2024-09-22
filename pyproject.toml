@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "git-rg"
+version = "0.1.0"
+description = "A utility for recursively searching for files in .git directories using regex."
+authors = [{ name = "s3rgeym" }]
+readme = "README.md"
+license = { text = "MIT" }
+
+[project.scripts]
+git-rg = "git_rg:main"
