@@ -10,6 +10,12 @@ from functools import partial
 from pathlib import Path
 from signal import SIG_DFL, SIGPIPE, signal
 
+__version__ = "0.1.2"
+__author__ = "s3rgeym"
+
+# https://stackoverflow.com/questions/14207708/ioerror-errno-32-broken-pipe-when-piping-prog-py-othercmd
+signal(SIGPIPE, SIG_DFL)
+
 CSI = "\033["
 RESET = CSI + "0m"
 
@@ -42,12 +48,6 @@ BRIGHT_BLUE = CSI + "94m"
 BRIGHT_MAGENTA = CSI + "95m"
 BRIGHT_CYAN = CSI + "96m"
 BRIGHT_WHITE = CSI + "97m"
-
-__version__ = "0.1.1"
-__author__ = "s3rgeym"
-
-# https://stackoverflow.com/questions/14207708/ioerror-errno-32-broken-pipe-when-piping-prog-py-othercmd
-signal(SIGPIPE, SIG_DFL)
 
 
 print_err = partial(print, file=sys.stderr)
