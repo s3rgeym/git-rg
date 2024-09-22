@@ -118,7 +118,9 @@ def grep(
         line_it = enumerate(readlines(file_path), 1)
 
         for linenum, line in line_it:
-            if not pattern.search(line):
+            matches = list(pattern.finditer(line))
+
+            if not matches:
                 before_lines.append((linenum, line))
                 continue
 
@@ -132,7 +134,7 @@ def grep(
                 )
 
             line = truncate_string(line, maxline)
-            matches = list(pattern.finditer(line))
+
             print_line(linenum, highlight_matches(line, matches))
 
             for _ in range(after):
