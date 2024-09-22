@@ -8,6 +8,8 @@
 ## Installation
 
 ```bash
+pip install git-rg
+python3 -m pip install git-rg
 pipx install git-rg
 ```
 
