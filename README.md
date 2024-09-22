@@ -35,5 +35,5 @@ git-rg <pattern> [path] [-B <num>] [-A <num>]
 To search for passwords in all `.git` files within the current directory and show 2 lines before and after the match:
 
 ```bash
-git-rg "(?i)password\s*=\s*['\"]?(\w+)['\"]?" -B 2 -A
+git-rg "(?i)password\s*=\s*['\"]?(\w+)['\"]?" ~/projects -B 2 -A 2
 ```

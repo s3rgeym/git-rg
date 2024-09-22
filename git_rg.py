@@ -43,7 +43,7 @@ BRIGHT_MAGENTA = CSI + "95m"
 BRIGHT_CYAN = CSI + "96m"
 BRIGHT_WHITE = CSI + "97m"
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "s3rgeym"
 
 # https://stackoverflow.com/questions/14207708/ioerror-errno-32-broken-pipe-when-piping-prog-py-othercmd
@@ -66,18 +66,19 @@ def readlines(file_path: Path) -> typing.Iterable[str]:
         with file_path.open("rb") as f:
             if is_compressed(f):
                 decompressor = zlib.decompressobj()
-                buffer = b""
-                while chunk := f.read(4096):
+                buffer = ""
+                while chunk := f.read(1 << 16):
                     decompressed = decompressor.decompress(chunk)
-                    buffer += decompressed
-                    lines = buffer.split(b"\n")
-                    for line in lines[:-1]:
-                        yield line.decode("utf-8", errors="ignore")
-                    buffer = lines[-1]
+                    buffer += decompressed.decode("utf-8", errors="ignore")
+                    *lines, buffer = buffer.split("\n")
+                    yield from map(str.rstrip, lines)
                 if buffer:
-                    yield buffer.decode("utf-8", errors="ignore")
+                    yield buffer
             else:
-                yield from file_path.open("r", encoding="utf-8", errors="ignore")
+                yield from map(
+                    str.rstrip,
+                    file_path.open("r", encoding="utf-8", errors="ignore"),
+                )
     except Exception as e:
         print_err(f"Error reading {file_path}: {e}")
 
@@ -110,7 +111,7 @@ def grep(
 ) -> None:
     try:
         before_lines = deque(maxlen=before)
-        line_it = enumerate(map(str.rstrip, readlines(file_path)), 1)
+        line_it = enumerate(readlines(file_path), 1)
 
         for linenum, line in line_it:
             if not pattern.search(line):
