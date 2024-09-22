@@ -1,4 +1,4 @@
-# README
+# Git Recursive Grep
 
 [![PyPI version](https://img.shields.io/pypi/v/git-rg)](https://pypi.org/project/git-rg/)
 [![Downloads](https://img.shields.io/pypi/dm/git-rg)](https://pypi.org/project/git-rg/)
