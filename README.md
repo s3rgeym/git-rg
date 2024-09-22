@@ -35,4 +35,5 @@ git-rg "(?i)password\s*=\s*['\"]?(\w+)['\"]?" ~/projects -B 2 -A 2
 
 Output seems like this:
 
-![image](https://github.com/user-attachments/assets/284cd05e-d635-4530-8324-1661361c69c5)
+![image_2024-09-22_18-56-49](https://github.com/user-attachments/assets/c518f162-839e-4d83-97d0-9864a0abc7f8)
+
