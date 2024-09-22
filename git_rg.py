@@ -150,7 +150,7 @@ def git_grep(
         print_err(f"Error reading {file_path}: {e}")
 
 
-def recursive_git_grep(
+def git_rg(
     pattern: re.Pattern,
     directory: Path,
     before: int,
@@ -206,7 +206,7 @@ def main(argv: typing.Sequence[str] | None = None) -> None:
     args = parser.parse_args(argv)
 
     with suppress(KeyboardInterrupt):
-        recursive_git_grep(
+        git_rg(
             re.compile(args.pattern),
             args.path,
             args.before,
