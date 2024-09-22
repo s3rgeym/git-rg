@@ -107,7 +107,11 @@ def print_line(linenum: int, line: str) -> None:
 
 
 def grep(
-    pattern: re.Pattern, file_path: Path, before: int, after: int, maxline: int = 256
+    pattern: re.Pattern,
+    file_path: Path,
+    before: int,
+    after: int,
+    maxline: int,
 ) -> None:
     try:
         before_lines = deque(maxlen=before)
@@ -149,12 +153,13 @@ def recursive_grep(
     directory: Path,
     before: int,
     after: int,
+    maxline: int = 256,
 ) -> None:
-    for file in directory.glob("**/.git/**/*"):
+    for file in directory.glob("**/*.git/**/*"):
         if file.is_file():
             if file.name in ["index", "config", "HEAD"]:
                 continue
-            grep(pattern, file, before, after)
+            grep(pattern, file, before, after, maxline)
 
 
 def main(argv: typing.Sequence[str] | None = None) -> None:
